@@ -4,6 +4,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const helmet = require('helmet');
 const { NODE_ENV } = require('./config');
+const nRouter = require('./notes/notes-router.js');
+const fRouter = require('./folders/folders-router.js');
 
 const app = express();
 
@@ -14,6 +16,9 @@ const morganOption = (NODE_ENV === 'production')
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
+
+app.use('/notes', nRouter);
+app.use('/folders', fRouter);
 
 app.get('/', (req, res) => {
   res.send('Hello, boilerplate!');
